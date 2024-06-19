@@ -297,6 +297,8 @@ def main():
                 args.model,
                 **model_kwargs,
             )
+            from mltools.dmx import config_rules, DmxModel
+            model = DmxModel.from_torch(model)
         elif args.modeltype == "seq2seq":
             warnings.warn(
                 "Seq2Seq models have only been tested for HumanEvalPack & CodeT5+ models."
@@ -401,6 +403,7 @@ def main():
 
     # Save all args to config
     results["config"] = vars(args)
+    # breakpoint()
     if not args.generation_only:
         dumped = json.dumps(results, indent=2)
         if accelerator.is_main_process:
