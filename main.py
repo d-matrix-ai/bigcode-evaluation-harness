@@ -14,10 +14,15 @@ from transformers import (
     HfArgumentParser,
 )
 
+from aim import Run
+from datetime import datetime, timedelta
 from bigcode_eval.arguments import EvalArguments
 from bigcode_eval.evaluator import Evaluator
 from bigcode_eval.tasks import ALL_TASKS
 
+current_datetime_str = datetime.now().strftime("%Y%m%d_%H%M%S")
+aim_run = Run(repo='aim://10.10.0.237:53800', experiment='A100_mlref_gpu_eval_job', log_system_params=True)
+aim_run.add_tag(f'A100_mlref_eval_{current_datetime_str}')
 
 class MultiChoice:
     def __init__(self, choices):
@@ -297,8 +302,8 @@ def main():
                 args.model,
                 **model_kwargs,
             )
-            from mltools.dmx import config_rules, DmxModel
-            model = DmxModel.from_torch(model)
+            # from mltools.dmx import config_rules, DmxModel
+            # model = DmxModel.from_torch(model)
         elif args.modeltype == "seq2seq":
             warnings.warn(
                 "Seq2Seq models have only been tested for HumanEvalPack & CodeT5+ models."
