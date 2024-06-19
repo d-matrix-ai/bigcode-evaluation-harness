@@ -18,6 +18,12 @@ from bigcode_eval.arguments import EvalArguments
 from bigcode_eval.evaluator import Evaluator
 from bigcode_eval.tasks import ALL_TASKS
 
+from aim import Run
+from datetime import datetime, timedelta
+
+current_datetime_str = datetime.now().strftime("%Y%m%d_%H%M%S")
+aim_run = Run(repo='aim://10.10.0.237:53800', experiment='non-dmx-code-llama-eval', log_system_params=True)
+aim_run.add_tag(f'non-dmx-code-llama-eval_{current_datetime_str}')
 
 class MultiChoice:
     def __init__(self, choices):
